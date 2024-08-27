@@ -1,113 +1,143 @@
+'use client'
 import Image from "next/image";
+import Card from "./components/Card";
+import Footer from "./components/Footer";
+import Nav from "./components/Nav";
+import Link from 'next/link';
+import { useEffect, useState } from "react";
+import { getblogs } from "./components/Backend";
+type autor = {
+  email: string;
+  image: string;
+  name: string;
+  role: string;
+  _id: string;
+};
+type blog = {
+  _id: "";
+  image: string;
+  title: string;
+  description: string;
+  author: null | autor;
+  isPending: boolean;
+  tags: string[];
+  likes: number;
+  relatedBlogs: string[];
+  skills: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
 
 export default function Home() {
+  const [loading, setloading] = useState(true);
+  const [blogs, setblogs] = useState<blog[]>();
+  const [arr, setarr] = useState<blog[]>();
+  const [num, setnum] = useState<number>(5);
+  const [inputValue, setInputValue] = useState("");
+
+  // Step 3: Create the onChange handler
+  const handleChange = (event:any) => {
+    setInputValue(event.target.value);
+    console.log(event.target.value);
+  };
+  
+  // Combined fetching data to reduce multiple useEffect hooks
+  useEffect(() => {
+    const fetchData = async () => {
+      
+      try {
+        // Fetch f
+        const data1 = await getblogs();
+        console.log(data1);
+        setblogs(data1);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setloading(false);
+      }
+    };
+    
+    fetchData();
+  }, []);
+  
+  if (loading )
+    return (<div>loading</div>);
+  const wowblogs = blogs?.filter((blog)=>blog.title.includes(inputValue))
+  const newblogs = []
+  // if (inputValue){
+  //   setblogs(wowblogs)
+  // }
+  let run =  wowblogs!.length>0? wowblogs : blogs
+  if (inputValue.length>0){
+    run = wowblogs}
+  for (let i = 0; i < num; i++) {
+    if (run && run[i]){
+    newblogs.push(run[i])
+  }}
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="">
+      <Nav />
+      <div className="flex w-full pt-14 px-16">
+        <div className="text-[#000000] font-bold text-2xl">Blogs</div>
+        <div className="flex justify-center w-full">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={inputValue} // Bind the input value to state
+            onChange={(e)=>handleChange(e)}
+            className="border border-[#CFCFCF] rounded-full flex justify-center focus:border focus:border-blue-500"
+          />
+          <div className="bg-[#264FAD] rounded-full flex justify-center items-center px-4 py-1 ml-4 text-white text-sm">
+            + New Blog
+          </div>
         </div>
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      {/* <div className=" border-2 border-gray-200 mx-40"></div> */}
+      <div className="mx-32">
+        {newblogs?.map((blog: blog, ind: number) => (
+          <Link
+            key={blog._id}
+            href={{
+              pathname: "/blog",
+              query: {
+                id: blog._id,
+              },
+            }}
+          >
+            <Card key='' blog={blog}  />
+          </Link>
+        ))}
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <Footer />
     </main>
   );
 }
+
+
+
+
+    // {
+    //   jobs.data.map((job: any, ind: number) => (
+    //     <Link
+    //       key={job.title}
+    //       href={{
+    //         pathname: "/about",
+    //         query: {
+    //           name: job.title,
+    //           id: ind,
+    //           job: job,
+    //         },
+    //       }}
+    //     >
+    //       <Cards key={ind} job={job} ind={ind} />
+    //     </Link>
+    //   ));
+    // }
+
+//   const Part = async ({searchParams} : {
+//   searchParams:{
+//     name:string;
+//     id : number;
+//   }
+// }) => {
