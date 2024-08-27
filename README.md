@@ -23,3 +23,6 @@ your termina using the command
 Features
 searching: search from the list of cards.
 go to the card of your chooice
+![Screenshot (358)](https://github.com/user-attachments/assets/15421f1a-0e56-46df-8967-2d72a46c558e)
+
+![Screenshot (359)](https://github.com/user-attachments/assets/447ea07c-bedc-45e5-8296-b3cf3b741252)
