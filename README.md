@@ -1,4 +1,4 @@
-# name Samuel Mulugeta
+# Name Samuel Mulugeta
 Overview
 Name: samuel Mulugeta
  steps for runing the up
