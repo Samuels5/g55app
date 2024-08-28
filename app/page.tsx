@@ -1,11 +1,12 @@
-'use client'
+"use client";
 import Image from "next/image";
 import Card from "./components/Card";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
-import Link from 'next/link';
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getblogs } from "./components/Backend";
+import { getblogs } from "./api/Backend";
+import data from "../public/data.json";
 type autor = {
   email: string;
   image: string;
@@ -30,51 +31,55 @@ type blog = {
 };
 
 export default function Home() {
-  const [loading, setloading] = useState(true);
-  const [blogs, setblogs] = useState<blog[]>();
+  // const [loading, setloading] = useState(true);
+  const [blogs, setblogs] = useState<blog[]>(data as blog[]);
   const [arr, setarr] = useState<blog[]>();
   const [num, setnum] = useState<number>(5);
   const [inputValue, setInputValue] = useState("");
 
   // Step 3: Create the onChange handler
-  const handleChange = (event:any) => {
+  const handleChange = (event: any) => {
     setInputValue(event.target.value);
     console.log(event.target.value);
   };
-  
+
   // Combined fetching data to reduce multiple useEffect hooks
-  useEffect(() => {
-    const fetchData = async () => {
-      
-      try {
-        // Fetch f
-        const data1 = await getblogs();
-        console.log(data1);
-        setblogs(data1);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setloading(false);
-      }
-    };
-    
-    fetchData();
-  }, []);
-  
-  if (loading )
-    return (<div>loading</div>);
-  const wowblogs = blogs?.filter((blog)=>blog.title.includes(inputValue))
-  const newblogs = []
+  // useEffect(() => {
+  //   const fetchData = async () => {
+
+  //     try {
+  //       // Fetch f
+  //       const data1 = await getblogs();
+  //       console.log(data1);
+  //       setblogs(data1);
+  //       setloading(false);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //     }
+  //   };
+
+  //   fetchData();
+  // }, []);
+
+  // if (loading )
+  //   return (<div>loading</div>);
+  const wowblogs = blogs?.filter((blog) => blog.title.includes(inputValue));
+  const newblogs = [];
   // if (inputValue){
-  //   setblogs(wowblogs)
+  // setblogs(wowblogs)
   // }
-  let run =  wowblogs!.length>0? wowblogs : blogs
-  if (inputValue.length>0){
-    run = wowblogs}
+  let run = wowblogs?.length! > 0 ? wowblogs : blogs;
+  if (inputValue.length > 0) {
+    run = wowblogs;
+  } else {
+    // setblogs(data as blog[])
+  }
   for (let i = 0; i < num; i++) {
-    if (run && run[i]){
-    newblogs.push(run[i])
-  }}
+    if (run && run[i]) {
+      newblogs.push(run[i]);
+    }
+  }
   return (
     <main className="">
       <Nav />
@@ -85,7 +90,7 @@ export default function Home() {
             type="text"
             placeholder="Search..."
             value={inputValue} // Bind the input value to state
-            onChange={(e)=>handleChange(e)}
+            onChange={(e) => handleChange(e)}
             className="border border-[#CFCFCF] rounded-full flex justify-center focus:border focus:border-blue-500"
           />
           <div className="bg-[#264FAD] rounded-full flex justify-center items-center px-4 py-1 ml-4 text-white text-sm">
@@ -105,7 +110,7 @@ export default function Home() {
               },
             }}
           >
-            <Card key='' blog={blog}  />
+            <Card key="" blog={blog} />
           </Link>
         ))}
       </div>
@@ -113,31 +118,3 @@ export default function Home() {
     </main>
   );
 }
-
-
-
-
-    // {
-    //   jobs.data.map((job: any, ind: number) => (
-    //     <Link
-    //       key={job.title}
-    //       href={{
-    //         pathname: "/about",
-    //         query: {
-    //           name: job.title,
-    //           id: ind,
-    //           job: job,
-    //         },
-    //       }}
-    //     >
-    //       <Cards key={ind} job={job} ind={ind} />
-    //     </Link>
-    //   ));
-    // }
-
-//   const Part = async ({searchParams} : {
-//   searchParams:{
-//     name:string;
-//     id : number;
-//   }
-// }) => {

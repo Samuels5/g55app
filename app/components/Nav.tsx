@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 const Nav = () => {
   return (
@@ -143,7 +144,7 @@ const Nav = () => {
         <div>Get Involved</div>
       </div>
       <div className="flex font-bold items-center">
-        <div className="pr-4 text-[#3C3C3C]">Login</div>
+        <Link href='/login' className="pr-4 text-[#3C3C3C]">Login</Link>
         <div className="text-[#FFFFFF] bg-[#264FAD] px-5 py-2 rounded-lg">
           Donate
         </div>
