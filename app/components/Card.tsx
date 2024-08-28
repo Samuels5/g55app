@@ -28,7 +28,7 @@ const Card = ({blog}:{blog: blog}) => {
       <div className="border-t-2 border-[#D7D7D7] mr-40 my-11"></div>
       <div className="flex mt-8">
         <div>
-          <Image src="/image.png" alt="profile" width={50} height={50} />
+          <Image src={blog.image} alt="profile" width={50} height={50} />
         </div>
         <div className="pl-2">
           <div className="flex items-center">
@@ -59,7 +59,7 @@ const Card = ({blog}:{blog: blog}) => {
           </p>
         </div>
         <div>
-          <Image src="/image2.png" alt="profile" width={500} height={400} />
+          <Image src={blog.image} alt="profile" width={600} height={400} />
         </div>
       </div>
       <div className="flex text-[#8E8E8E] text-sm my-6">
