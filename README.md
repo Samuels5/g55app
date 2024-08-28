@@ -1,5 +1,6 @@
 # Name Samuel Mulugeta
-website link: https://g55app-samuel-mulugetas-projects.vercel.app/
+website link: https://g55app-samuel-mulugetas-projects.vercel.app
+
 Name: samuel Mulugeta
  steps for runing the up
 1, first colon the github repo using
