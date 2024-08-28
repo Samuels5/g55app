@@ -80,10 +80,11 @@ export default function Home() {
       newblogs.push(run[i]);
     }
   }
-  return (
-    <main className="">
-      <Nav />
-      <div className="flex w-full pt-14 px-16">
+  return (<>
+    <Nav />
+    <main className=" min-h-[25vh]">
+      
+      <div className="flex w-full pt-14 px-16 ">
         <div className="text-[#000000] font-bold text-2xl">Blogs</div>
         <div className="flex justify-center w-full">
           <input
@@ -91,7 +92,7 @@ export default function Home() {
             placeholder="Search..."
             value={inputValue} // Bind the input value to state
             onChange={(e) => handleChange(e)}
-            className="border border-[#CFCFCF] rounded-full flex justify-center focus:border focus:border-blue-500"
+            className="border border-[#CFCFCF] rounded-full flex justify-center focus:border focus:border-blue-500 px-4"
           />
           <div className="bg-[#264FAD] rounded-full flex justify-center items-center px-4 py-1 ml-4 text-white text-sm">
             + New Blog
@@ -114,7 +115,9 @@ export default function Home() {
           </Link>
         ))}
       </div>
-      <Footer />
+      
     </main>
+    <Footer />
+    </>
   );
 }
