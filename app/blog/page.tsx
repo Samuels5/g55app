@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useState } from 'react'
-import Nav from '../components/Nav'
-import Footer from '../components/Footer'
-import Image from 'next/image'
-import Related from '../components/Related'
-import { getblogs } from '../components/Backend';
+import React, { useEffect, useState } from "react";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
+import Image from "next/image";
+import Related from "../components/Related";
+import { getblogs } from "../api/Backend";
+import data from '../../public/data.json'
 type autor = {
   email: string;
   image: string;
@@ -27,36 +28,37 @@ type blog = {
   updatedAt: string;
   __v: number;
 };
-const Blog = ({searchParams} : {
-  searchParams:{
-    id : string;
-  }
-}) =>{
-    const [loading, setloading] = useState(true);
-    const [blogs, setblogs] = useState<blog[]>();
+const Blog = ({
+  searchParams,
+}: {
+  searchParams: {
+    id: string;
+  };
+}) => {
+  const [loading, setloading] = useState(true);
+  const [blogs, setblogs] = useState<blog[]>(data as blog[] );
 
-    // Combined fetching data to reduce multiple useEffect hooks
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          // Fetch f
-          const data1 = await getblogs();
-          console.log(data1);
-          setblogs(data1);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        } finally {
-          setloading(false);
-        }
-      };
+  // Combined fetching data to reduce multiple useEffect hooks
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Fetch f
+  //       const data1 = await getblogs();
+  //       console.log(data1);
+  //       setblogs(data1);
+  //     } catch (error) {
+  //       console.error("Error fetching data:", error);
+  //     } finally {
+  //       setloading(false);
+  //     }
+  //   };
 
-      fetchData();
-    }, []);
-    
-    if (loading) return <div>loading</div>;
-    const newarr = blogs?.filter((blog) => blog._id === searchParams.id)
-    const newblog = newarr![0]
+  //   fetchData();
+  // }, []);
 
+  // if (loading) return <div>loading</div>;
+  const newarr = blogs?.filter((blog) => blog._id === searchParams.id);
+  const newblog = newarr![0];
 
   return (
     <div className="">
@@ -98,12 +100,11 @@ const Blog = ({searchParams} : {
           <p className="py-5 text-sm text-[#737373]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod
             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud{" "}exercitation{" "}
-            ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-            irure dolor in reprehenderit in voluptate velit esse cillum dolore
-            eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est
-            laborum.
+            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat. Duis aute irure dolor in reprehenderit in
+            voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+            officia deserunt mollit anim id est laborum.
           </p>
           <p className="py-5 text-sm text-[#737373]">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod
@@ -141,7 +142,7 @@ const Blog = ({searchParams} : {
         </div>
         <div className="px-28">
           <div className="mb-5">Related Blogs</div>
-          <div className="flex flex-wrap justify-between sm:block">
+          <div className="flex flex-wrap justify-between ">
             <Related />
             <Related />
             <Related />
@@ -151,6 +152,6 @@ const Blog = ({searchParams} : {
       <Footer />
     </div>
   );
-}
+};
 
-export default Blog
+export default Blog;
