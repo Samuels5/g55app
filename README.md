@@ -3,8 +3,8 @@ website link: https://g55app-samuel-mulugetas-projects.vercel.app
 
 Name: samuel Mulugeta
  steps for runing the up
-1, first colon the github repo using
-your termina using the command
+1, first clone the github repo using
+your terminal using the command
 
 `git clone https://github.com/Samuels5/g55app.git`
 
@@ -24,6 +24,7 @@ your termina using the command
 Features
 searching: search from the list of cards.
 routing: go to the specific blog when you toch the card.
+
 go to the card of your chooice
 ![Screenshot (368)](https://github.com/user-attachments/assets/8dba343f-d7c4-4ea2-823d-e648274c133f)
 
