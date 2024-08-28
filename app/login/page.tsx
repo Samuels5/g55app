@@ -166,9 +166,23 @@ const Login = () => {
           <div className="mt-10">
             Hey, Enter your details to sign in to your account{" "}
           </div>
-          <div className="w-full h-8 bg-slate-500 mt-5"></div>
-          <div className="w-full h-8 bg-slate-500 mt-5"></div>
-          <div className='text-center w-16 mt-5 bg-blue-700'> submit</div>
+          <input
+            type="text"
+            name=""
+            id=""
+            placeholder="Email Address"
+            className="border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2 transition duration-200 ease-in-out hover:border-blue-400 bg-gray-300 my-5"
+          />
+          <input
+            type="text"
+            name=""
+            id=""
+            placeholder="Password"
+            className="border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2 transition duration-200 ease-in-out hover:border-blue-400 bg-gray-300"
+          />
+          <div className='flex justify-center'>
+          <button className="text-center w-16 mt-5 bg-blue-700"> submit</button>
+          </div>
         </div>
       </div>
     </div>
