@@ -1,6 +1,8 @@
 # Name Samuel Mulugeta
 website link: https://g55app-samuel-mulugetas-projects.vercel.app
 
+figma link https://www.figma.com/design/ICVIr9Nv9iYUtnuPxwJakX/G5-Project-Phase-Web-Assessment?node-id=9219-628&node-type=frame&t=mq6sKydEMleaUkE7-0
+
 Name: samuel Mulugeta
  steps for runing the up
 1, first clone the github repo using
